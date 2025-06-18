@@ -9,7 +9,7 @@ from qmix import QMIXTrainer
 
 print("✅ QMIX main_qmix.py started")
 
-# ===== Config =====
+# Config
 NUM_AGENTS = int(sys.argv[1]) if len(sys.argv) > 1 else 2
 GRID_SIZE = 5
 EPISODES = 200
@@ -19,12 +19,12 @@ EPSILON_DECAY = 0.995
 TARGET_UPDATE_FREQ = 10
 STATE_DIM = NUM_AGENTS * 3 * GRID_SIZE * GRID_SIZE  # Flattened joint observation
 
-# ===== Ensure results folder =====
+# Ensure results folder 
 if not os.path.exists("results"):
     os.makedirs("results")
     print("📁 Created 'results/' directory")
 
-# ===== Initialize environment and trainer =====
+# Initialize environment and trainer 
 env = MultiAgentGridEnv(grid_size=GRID_SIZE, num_agents=NUM_AGENTS)
 input_shape = (3, GRID_SIZE, GRID_SIZE)
 
@@ -37,7 +37,7 @@ trainer = QMIXTrainer(
 
 episode_rewards = []
 
-# ===== Training Loop =====
+# Training Loop 
 for episode in range(EPISODES):
     print(f"\n▶️ Episode {episode + 1}/{EPISODES}")
     obs = env.reset()
@@ -74,7 +74,7 @@ for episode in range(EPISODES):
     episode_rewards.append(total_reward)
     print(f"✅ Episode {episode} complete | Reward: {total_reward:.2f} | Epsilon: {epsilon:.3f}")
 
-# ===== Plot Results =====
+# Plot Results 
 plt.plot(episode_rewards)
 plt.title(f"Total Reward per Episode (QMIX | {NUM_AGENTS} Agents)")
 plt.xlabel("Episode")
